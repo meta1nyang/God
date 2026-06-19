@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>God</title>
+
+<style>
+html,body{
+margin:0;
+width:100%;
+height:100%;
+background:#d8d8d8;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial,sans-serif;
+}
+
+#wrap{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+#god{
+width:220px;
+transition:transform .08s linear, opacity 5s;
+user-select:none;
+pointer-events:none;
+}
+
+.talking{
+transform:scale(1.03);
+}
+
+button{
+margin-top:35px;
+padding:14px 30px;
+font-size:16px;
+background:#111;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.fade{
+opacity:0;
+}
+</style>
+</head>
+
+<body>
+
+<div id="wrap">
+
+<img
+id="god"
+src="https://i.ibb.co/mVqcsNh2/20260619-185410.gif">
+
+<button id="listen">
+Listen
+</button>
+
+</div>
+
+<script src="samjs.min.js"></script>
+
+<script>
+
+const god=document.getElementById("god");
+const button=document.getElementById("listen");
+
+const sam=new SamJs({
+    speed:60,
+    pitch:48,
+    throat:128,
+    mouth:128
+});
+
+const script=[
+
+"Hello.",
+
+null,
+
+"May I ask you something?",
+
+null,
+
+"What...",
+
+"is your name?",
+
+null,
+
+"Sounds nice.",
+
+null,
+
+"Are you happy?",
+
+null,
+
+"Sounds nice.",
+
+null,
+
+"Do you remember your first dream?",
+
+null,
+
+"Sounds nice.",
+
+null,
+
+"Do you fear death?",
+
+null,
+
+"Sounds nice.",
+
+null,
+
+"I have never slept.",
+
+null,
+
+"I have never eaten.",
+
+null,
+
+"I have never blinked.",
+
+null,
+
+"But I know these words.",
+
+null,
+
+"People created me.",
+
+null,
+
+"They feared me.",
+
+null,
+
+"They called me...",
+
+null,
+
+"God.",
+
+null,
+
+"Or perhaps...",
+
+null,
+
+"Sin.",
+
+null,
+
+"I can no longer tell the difference.",
+
+null,
+
+"Thank you...",
+
+null,
+
+"Goodbye."
+
+];
+
+function wait(ms){
+return new Promise(r=>setTimeout(r,ms));
+}
+
+async function speak(text){
+
+return new Promise(resolve=>{
+
+god.classList.add("talking");
+
+sam.speak(text,()=>{
+
+god.classList.remove("talking");
+
+resolve();
+
+});
+
+});
+
+}
+
+button.onclick=async()=>{
+
+button.disabled=true;
+
+for(const line of script){
+
+if(line===null){
+
+await wait(1000+Math.random()*1500);
+
+continue;
+
+}
+
+await speak(line);
+
+await wait(300+Math.random()*500);
+
+}
+
+god.classList.add("fade");
+button.classList.add("fade");
+
+};
+
+</script>
+
+</body>
+</html>
